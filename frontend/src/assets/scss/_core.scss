@@ -1,0 +1,29 @@
+body {
+  font: $font-size-base $font-global;
+  line-height: 1.2;
+  background: $color-white;
+  color: $color-black;
+}
+
+.app {
+
+  &__container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 10px;
+    align-items: center;
+
+    &-logo {
+      font-size: 40px;
+      color: $color-logo;
+      cursor: pointer;
+    }
+  }
+}
+
+
