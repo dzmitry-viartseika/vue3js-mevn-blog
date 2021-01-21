@@ -7,6 +7,33 @@ body {
 
 .app {
 
+  &__title {
+    font-size: 30px;
+  }
+
+  &__textarea {
+    border: 1px solid $color-logo;
+    border-radius: $borderRadius;
+    width: 100%;
+    min-height: 140px;
+    padding: 12px;
+    font: $font-size-base $font-global;
+    line-height: 1.42 ;
+    transition: border-color .15s ease-in;
+    resize: none;
+    min-width: 100%;
+  }
+
+  &-field {
+    width: 100%;
+    margin-bottom: 15px;
+
+    &__title {
+      margin-bottom: 20px;
+      font-size: 30px;
+    }
+  }
+
   &__container {
     max-width: 1400px;
     margin: 0 auto;

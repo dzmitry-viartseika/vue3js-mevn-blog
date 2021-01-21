@@ -39,6 +39,8 @@ export default {
 <style lang="scss">
 @import "assets/scss/reset.scss";
 @import "assets/scss/variables.scss";
+@import "assets/scss/inputs.scss";
+@import "assets/scss/buttons.scss";
 @import "assets/scss/core.scss";
 
 @font-face {
