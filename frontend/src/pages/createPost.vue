@@ -26,6 +26,7 @@
 
 <script>
 import { reactive } from 'vue';
+import postApi from '@/api/articlesApi';
 
 export default {
   name: 'createPost',
@@ -38,8 +39,13 @@ export default {
 
     const addNewPost = () => {
       console.log('post', post);
+      postApi.addNewPost(post).then((resp) => {
+        console.log('resp', resp.data);
+      })
+        .catch((e) => {
+          console.error(e);
+        });
     };
-
     return {
       post,
       addNewPost,
