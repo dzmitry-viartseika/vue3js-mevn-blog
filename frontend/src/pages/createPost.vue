@@ -14,7 +14,7 @@
     </div>
     <div class="app-field">
       <div class="app-field__title">
-        Tags (Hit enter to add a tag)
+        Tags (Hit enter to add a tag) {{ tag }}
       </div>
       <input type="text" v-model="tag" @keydown.enter.prevent="handleKey"
              class="app__input"
@@ -44,6 +44,8 @@ export default {
     const tag = ref('');
 
     const handleKey = () => {
+      console.log('post.tags', post.tags);
+      console.log('tag.value', tag.value);
       if (post.tags.value.includes(tag.value)) {
         tag.value = tag.value.replace(/\s/, '');
         post.tags.push(tag.value);
