@@ -14,6 +14,6 @@ export default {
     const instWithCred = axios.create({
       baseURL: domains.POSTS,
     });
-    return instWithCred.post('newPost', { form });
+    return instWithCred.post('newArticle', { form });
   },
 };

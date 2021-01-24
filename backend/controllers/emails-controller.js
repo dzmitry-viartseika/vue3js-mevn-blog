@@ -16,10 +16,11 @@ class EmailsController {
     };
     newEmail = async (req, res) => {
         const item = new Article()
-            item.title = req.body.title,
-            item.content = req.body.content,
-            item.tags = req.body.tags,
+            item.title = req.body.form.title,
+            item.content = req.body.form.content,
+            item.tags = req.body.form.tags,
         item.save()
+        res.send(item);
     };
 }
 
