@@ -14,9 +14,11 @@
     </div>
     <div class="app-field">
       <div class="app-field__title">
-        Tags
+        Tags (Hit enter to add a tag)
       </div>
-      <input type="text" v-model="post.tags" class="app__input" placeholder="Enter tags">
+      <input type="text" v-model="tag" @keydown.enter.prevent="handleKey"
+             class="app__input"
+             placeholder="Enter tags">
     </div>
     <div class="app-post__btn">
       <button class="app-button" @click="addNewPost">Add Post</button>
@@ -25,22 +27,33 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import postApi from '@/api/articlesApi';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'createPost',
   setup() {
+    const router = useRouter();
     const post = reactive({
       title: '',
       content: '',
       tags: [],
     });
 
+    const tag = ref('');
+
+    const handleKey = () => {
+      if (post.tags.value.includes(tag.value)) {
+        tag.value = tag.value.replace(/\s/, '');
+        post.tags.push(tag.value);
+      }
+      tag.value = '';
+    };
+
     const addNewPost = () => {
-      console.log('post', post);
-      postApi.addNewPost(post).then((resp) => {
-        console.log('resp', resp.data);
+      postApi.addNewPost(post).then(() => {
+        router.push('/');
       })
         .catch((e) => {
           console.error(e);
@@ -48,7 +61,9 @@ export default {
     };
     return {
       post,
+      tag,
       addNewPost,
+      handleKey,
     };
   },
 };

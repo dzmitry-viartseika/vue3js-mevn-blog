@@ -1,7 +1,7 @@
 <template>
   <div class="app-home">
     <h1 class="app__title">
-      HOME {{ allArticles }}
+      HOME
     </h1>
     <postsList />
   </div>
@@ -9,7 +9,7 @@
 
 <script>
 import postsList from '@/components/post/postsList.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, provide } from 'vue';
 import postApi from '@/api/articlesApi';
 
 export default {
@@ -19,6 +19,9 @@ export default {
   },
   setup() {
     const allArticles = ref([]);
+
+    provide('allArticles', allArticles);
+
     onMounted(() => {
       postApi.getAllArticles().then((resp) => {
         console.log('resp', resp.data);
