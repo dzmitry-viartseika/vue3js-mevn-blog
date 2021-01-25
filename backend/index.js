@@ -3,10 +3,6 @@ const router = require('./routers/export-router');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const options = {
-    customJs: '/custom.js'
-  };
-
 mongoose.connect('mongodb://localhost:27017/wertey-posts', {
     useNewUrlParser: true,
     useCreateIndex: true,

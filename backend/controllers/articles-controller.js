@@ -1,12 +1,11 @@
-const Articles = require('../models/emailsList');
+const Articles = require('../models/articlesList');
 const mongoose = require('mongoose');
 const Article = mongoose.model('Article');
 
-class EmailsController {
+class ArticlesController {
     constructor(){}
     getAllArticles = async (req, res) => {
         Article.find((err, docs) => {
-            console.log('docs', docs)
             if (err) {
                 res.send(err);
             } else {
@@ -24,4 +23,4 @@ class EmailsController {
     };
 }
 
-module.exports = EmailsController;
+module.exports = ArticlesController;

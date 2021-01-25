@@ -1,4 +1,4 @@
-const articlesRouter = require('./emails')
+const articlesRouter = require('./articles')
 
 module.exports = {
     articlesRouter,

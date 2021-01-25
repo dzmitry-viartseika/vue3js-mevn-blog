@@ -26,7 +26,9 @@
       </div>
     </div>
     <div class="app-post__btn">
-      <button class="app-button" @click="addNewPost">Add Post</button>
+      <button class="app-button"
+              :class="{'app-button_disabled': !post.title || !post.content}"
+              @click="addNewPost">Add Post</button>
     </div>
   </div>
 </template>
@@ -45,7 +47,7 @@ export default {
     const test = () => {
       if (!tags.value.includes(tag.value)) {
         tag.value = tag.value.replace(/\s/, '');
-        tags.value.push(tag.value);
+        tags.value.unshift(tag.value);
       }
       tag.value = '';
     };

@@ -1,7 +1,7 @@
 <template>
   <header class="app-menu">
     <div class="app-menu__item"
-         :class="{'app-menu__item_active': activeItem === item.id}"
+         :class="{'app-menu__item_active': item.route === routePathActive}"
          v-for="item in menuList"
          :key="item.id"
          @click="proceedTo(item)"
@@ -13,26 +13,37 @@
 
 <script>
 import menuItemsList from '@/constants/menuItemsList';
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
 
 export default {
   name: 'headerTemplate',
   setup() {
     const router = useRouter();
+    const routePath = useRoute();
     const menuList = menuItemsList;
-    const activeItem = ref(-1);
+    const routePathActive = ref('');
 
     const proceedTo = (item) => {
-      const { route, id } = item;
-      activeItem.value = id;
+      const { route } = item;
       router.push(route);
     };
+
+    onMounted(() => {
+      routePathActive.value = routePath.path;
+    });
+
+    watch(
+      () => routePath.path,
+      (newVal) => {
+        routePathActive.value = newVal;
+      },
+    );
 
     return {
       menuList,
       proceedTo,
-      activeItem,
+      routePathActive,
     };
   },
 };

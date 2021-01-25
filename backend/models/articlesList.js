@@ -9,7 +9,8 @@ const userArticle = new mongoose.Schema({
     },
     tags: {
         type: Array
-    }
+    },
+    created_at: { type: Date, required: true, default: Date.now }
 });
 
 const Article = mongoose.model('Article', userArticle)

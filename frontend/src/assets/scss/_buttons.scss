@@ -8,6 +8,12 @@
   cursor: pointer;
   transition: opacity .15s ease-in;
 
+  &_disabled {
+    opacity: .8;
+    pointer-events: none;
+    cursor: default;
+  }
+
   &:hover {
     opacity: .8;
   }
