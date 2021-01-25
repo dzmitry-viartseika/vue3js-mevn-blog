@@ -32,6 +32,16 @@ body {
       margin-bottom: 20px;
       font-size: 30px;
     }
+
+    &__tags {
+      display: flex;
+      margin-top: 5px;
+      color: $color-logo;
+
+      div + div {
+        margin-left: 5px;
+      }
+    }
   }
 
   &__container {

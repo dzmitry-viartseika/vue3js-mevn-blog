@@ -14,11 +14,16 @@
     </div>
     <div class="app-field">
       <div class="app-field__title">
-        Tags (Hit enter to add a tag) {{ tag }}
+        Tags (Hit enter to add a tag)
       </div>
-      <input type="text" v-model="tag" @keydown.enter.prevent="handleKey"
+      <input type="text" v-model="tag" @keydown.enter.prevent="test"
              class="app__input"
-             placeholder="Enter tags">
+             placeholder="Enter tag">
+      <div class="app-field__tags">
+        <div class="app-field__tags-item" v-for="tag in tags" :key="tag">
+          #{{ tag }}
+        </div>
+      </div>
     </div>
     <div class="app-post__btn">
       <button class="app-button" @click="addNewPost">Add Post</button>
@@ -35,23 +40,21 @@ export default {
   name: 'createPost',
   setup() {
     const router = useRouter();
-    const post = reactive({
-      title: '',
-      content: '',
-      tags: [],
-    });
-
     const tag = ref('');
-
-    const handleKey = () => {
-      console.log('post.tags', post.tags);
-      console.log('tag.value', tag.value);
-      if (post.tags.value.includes(tag.value)) {
+    const tags = ref([]);
+    const test = () => {
+      if (!tags.value.includes(tag.value)) {
         tag.value = tag.value.replace(/\s/, '');
-        post.tags.push(tag.value);
+        tags.value.push(tag.value);
       }
       tag.value = '';
     };
+
+    const post = reactive({
+      title: '',
+      content: '',
+      tags,
+    });
 
     const addNewPost = () => {
       postApi.addNewPost(post).then(() => {
@@ -64,8 +67,9 @@ export default {
     return {
       post,
       tag,
+      tags,
       addNewPost,
-      handleKey,
+      test,
     };
   },
 };

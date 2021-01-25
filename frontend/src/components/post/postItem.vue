@@ -8,7 +8,7 @@
     </div>
     <div class="app-post-item__tags">
       <div class="app-post-item__tags-tag" v-for="tag in item.tags" :key="tag">
-        #{{ tag }}
+          #{{ tag }}
       </div>
     </div>
   </div>
@@ -48,6 +48,11 @@ export default {
 
   &__tags {
     display: flex;
+    color: $color-logo;
+
+    &-tag + .app-post-item__tags-tag {
+      margin-left: 5px;
+    }
   }
 }
 
