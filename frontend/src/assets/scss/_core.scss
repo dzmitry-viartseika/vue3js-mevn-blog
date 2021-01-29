@@ -11,6 +11,11 @@ body {
     font-size: 30px;
   }
 
+  &__subtitle {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
   &__textarea {
     border: 1px solid $color-logo;
     border-radius: $borderRadius;
