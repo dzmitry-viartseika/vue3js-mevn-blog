@@ -1,6 +1,10 @@
 <template>
   <div class="app-posts">
-    <postItem v-for="item in allArticles" :key="item._id" :item="item"/>
+    <postItem v-for="item in allArticles"
+              :key="item._id"
+              :item="item"
+              @selectTagArticle="selectTagArticle"
+    />
   </div>
 </template>
 
@@ -13,10 +17,14 @@ export default {
   components: {
     postItem,
   },
-  setup() {
+  setup(props, { emit }) {
     const allArticles = inject('allArticles');
+    const selectTagArticle = ((tag) => {
+      emit('selectTagArticle', tag);
+    });
     return {
       allArticles,
+      selectTagArticle,
     };
   },
 };
@@ -27,6 +35,7 @@ export default {
 
 .app-posts {
   margin-top: 50px;
+  width: 60%;
 }
 
 </style>

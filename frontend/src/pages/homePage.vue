@@ -1,23 +1,26 @@
 <template>
   <div class="app-home">
+
     <h1 class="app__title">
       HOME
     </h1>
-    <div>
-      <h2 class="app__subtitle">Tags</h2>
-      <div class="app-home__tags">
-        <div class="app-home__tags-item"
-             @click="selectTagArticle(tag)"
-             v-for="tag in uniqueTags"
-             :key="tag">
-          #{{ tag }}
+    <div class="app-home__content">
+      <loader v-if="isLoader"/>
+      <postsList v-if="allArticles.length" @selectTagArticle="selectTagArticle"/>
+      <div class="app-home__placeholder" v-else>
+        No articles yet
+      </div>
+      <div>
+        <h2 class="app__subtitle">Tags</h2>
+        <div class="app-home__tags">
+          <div class="app-home__tags-item"
+               @click="selectTagArticle(tag)"
+               v-for="tag in uniqueTags"
+               :key="tag">
+            #{{ tag }}
+          </div>
         </div>
       </div>
-    </div>
-    <loader v-if="isLoader"/>
-    <postsList v-if="allArticles.length" />
-    <div class="app-home__placeholder" v-else>
-      No articles yet
     </div>
   </div>
 </template>
@@ -62,9 +65,23 @@ export default {
     });
 
     const selectTagArticle = ((tag) => {
-      console.log('tag', tag);
-      const test = allArticles.value.filter((el) => el.tags.forEach((item) => item === tag));
-      console.log('test', test);
+      isLoader.value = true;
+      postApi.getAllArticles().then((resp) => {
+        isLoader.value = false;
+        allArticles.value = sortBy(resp.data, (el) => el.created_at).reverse();
+        const newArr = [];
+        allArticles.value.forEach((el) => {
+          el.tags.forEach((item) => {
+            if (item === tag) {
+              newArr.push(el);
+            }
+          });
+        });
+        allArticles.value = newArr;
+      }).catch((e) => {
+        isLoader.value = false;
+        console.error(e);
+      });
     });
 
     return {
@@ -82,8 +99,13 @@ export default {
 
 .app-home {
 
+  &__content {
+    display: flex;
+  }
+
   &__placeholder {
     margin-top: 20px;
+    width: 60%;
   }
 
   &__tags {
