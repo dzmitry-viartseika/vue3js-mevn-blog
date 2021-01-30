@@ -8,9 +8,12 @@
       <loader v-if="isLoader"/>
       <postsList v-if="allArticles.length" @selectTagArticle="selectTagArticle"/>
       <div class="app-home__placeholder" v-else>
-        No articles yet
+        <div>
+          No articles yet
+        </div>
+        <button class="app-button" @click="createPost">Create first article</button>
       </div>
-      <div>
+      <div v-if="uniqueTags.length">
         <h2 class="app__subtitle">Tags</h2>
         <div class="app-home__tags">
           <div class="app-home__tags-item"
@@ -29,6 +32,7 @@
 import postsList from '@/components/post/postsList.vue';
 import loader from '@/components/loader.vue';
 import { onMounted, ref, provide } from 'vue';
+import { useRouter } from 'vue-router';
 import postApi from '@/api/articlesApi';
 import { sortBy } from 'lodash';
 
@@ -42,6 +46,7 @@ export default {
     const allArticles = ref([]);
     const uniqueTags = ref([]);
     const isLoader = ref(false);
+    const router = useRouter();
 
     provide('allArticles', allArticles);
 
@@ -63,6 +68,12 @@ export default {
         console.error(e);
       });
     });
+
+    const createPost = () => {
+      router.push({
+        name: 'CreatePost',
+      });
+    };
 
     const selectTagArticle = ((tag) => {
       isLoader.value = true;
@@ -89,6 +100,7 @@ export default {
       isLoader,
       uniqueTags,
       selectTagArticle,
+      createPost,
     };
   },
 };
@@ -106,6 +118,10 @@ export default {
   &__placeholder {
     margin-top: 20px;
     width: 60%;
+
+    button {
+      margin-top: 20px;
+    }
   }
 
   &__tags {

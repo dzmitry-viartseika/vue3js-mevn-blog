@@ -16,7 +16,7 @@
       <div class="app-field__title">
         Tags (Hit enter to add a tag)
       </div>
-      <input type="text" v-model="tag" @keydown.enter.prevent="test"
+      <input type="text" v-model="tag" @keydown.enter.prevent="checkTags"
              class="app__input"
              placeholder="Enter tag">
       <div class="app-field__tags">
@@ -27,7 +27,7 @@
     </div>
     <div class="app-post__btn">
       <button class="app-button"
-              :class="{'app-button_disabled': !post.title || !post.content}"
+              :class="{'app-button_disabled': !post.title || !post.content  || !tags.length}"
               @click="addNewPost">Add Post</button>
     </div>
   </div>
@@ -44,7 +44,7 @@ export default {
     const router = useRouter();
     const tag = ref('');
     const tags = ref([]);
-    const test = () => {
+    const checkTags = () => {
       if (!tags.value.includes(tag.value)) {
         tag.value = tag.value.replace(/\s/, '');
         tags.value.unshift(tag.value);
@@ -71,7 +71,7 @@ export default {
       tag,
       tags,
       addNewPost,
-      test,
+      checkTags,
     };
   },
 };

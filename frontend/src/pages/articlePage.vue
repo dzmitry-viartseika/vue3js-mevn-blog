@@ -1,44 +1,48 @@
 <template>
-  <loader v-if="isLoader"/>
   <div class="app-post-item">
     <div class="app-post-item__title"
     >
-      {{ article.value.title }}
+      {{ article.title }}
     </div>
     <div class="app-post-item__content">
-      {{ article.value.content }}
+      {{ article.content }}
     </div>
     <div class="app-post-item__tags">
       <div class="app-post-item__tags-tag"
-           v-for="tag in article.value.tags"
+           v-for="tag in article.tags"
            :key="tag"
       >
         #{{ tag }}
       </div>
     </div>
+    <button class="app-button" @click="deleteArticle(article._id)">Delete article</button>
   </div>
 </template>
 
 <script>
-import { useRoute } from 'vue-router';
-import { onMounted, reactive, ref } from 'vue';
-import postApi from '@/api/articlesApi';
-import loader from '@/components/loader.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import articlesApi from '@/api/articlesApi';
 
 export default {
   name: 'articlePage',
   components: {
-    loader,
   },
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const { id } = route.params;
     const isLoader = ref(false);
-    const article = reactive([]);
+    const article = ref({
+      id: '',
+      title: '',
+      content: '',
+      tags: [],
+    });
 
     onMounted(() => {
       isLoader.value = true;
-      postApi.getAllArticles().then((resp) => {
+      articlesApi.getAllArticles().then((resp) => {
         isLoader.value = false;
         const { data } = resp;
         // eslint-disable-next-line no-underscore-dangle
@@ -49,10 +53,20 @@ export default {
       });
     });
 
+    const deleteArticle = ((idx) => {
+      console.log('idx', idx);
+      articlesApi.deleteArticle((idx)).then(() => {
+        router.push('/');
+      }).catch((e) => {
+        console.error(e);
+      });
+    });
+
     return {
       id,
       isLoader,
       article,
+      deleteArticle,
     };
   },
 };
@@ -78,6 +92,7 @@ export default {
   &__tags {
     display: flex;
     color: $color-logo;
+    margin-bottom: 20px;
 
     &-tag + .app-post-item__tags-tag {
       margin-left: 5px;

@@ -63,6 +63,12 @@ export default {
   &__title {
     font-size: 30px;
     margin-bottom: 20px;
+    cursor: pointer;
+    transition: color .15s ease-in;
+
+    &:hover {
+      color: $color-logo;
+    }
   }
 
   &__content {

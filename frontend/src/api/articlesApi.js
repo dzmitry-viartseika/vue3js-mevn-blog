@@ -10,10 +10,15 @@ export default {
     return instWithCred.get('getArticles');
   },
   addNewPost(form) {
-    console.log('form', form);
     const instWithCred = axios.create({
       baseURL: domains.POSTS,
     });
     return instWithCred.post('newArticle', { form });
+  },
+  deleteArticle(id) {
+    const instWithCred = axios.create({
+      baseURL: domains.POSTS,
+    });
+    return instWithCred.delete(`deleteArticle/?id=${id}`);
   },
 };
