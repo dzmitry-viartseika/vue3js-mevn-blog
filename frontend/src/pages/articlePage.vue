@@ -54,7 +54,6 @@ export default {
     });
 
     const deleteArticle = ((idx) => {
-      console.log('idx', idx);
       articlesApi.deleteArticle((idx)).then(() => {
         router.push('/');
       }).catch((e) => {
